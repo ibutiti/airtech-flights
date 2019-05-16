@@ -36,6 +36,10 @@ Install the project dependencies:
 ```
 pipenv install
 ```
+Activate the virtual environment:
+```
+pipenv shell
+```
 Run the project:
 ```
 pipenv run start
