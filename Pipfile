@@ -12,6 +12,11 @@ django-rq = "*"
 boto3 = "*"
 django-storages = "*"
 stripe = "*"
+gunicorn = "*"
+psycopg2 = "*"
+django-redis = "*"
+rq-scheduler = "*"
+django-extensions = "*"
 
 [requires]
 python_version = "3.7"

@@ -25,7 +25,7 @@ SECRET_KEY = '!gqgj6v9d!s9_=oo+n-!72fg=t0(rdznwn3b&$pd%gpa7&prrb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
@@ -36,7 +36,16 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.postgres',
     'django.contrib.staticfiles',
+    'django_extensions',
+    'django_rq',
+    'rest_framework',
+    'authentication',
+    'flights',
+    'payments',
+    'reservations',
+    'tickets',
 ]
 
 MIDDLEWARE = [
@@ -49,7 +58,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'airtech_flights.urls'
+ROOT_URLCONF = 'configuration.urls'
 
 TEMPLATES = [
     {
@@ -67,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'airtech_flights.wsgi.application'
+WSGI_APPLICATION = 'configuration.wsgi.application'
 
 
 # Database
@@ -75,8 +84,30 @@ WSGI_APPLICATION = 'airtech_flights.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432
+    }
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'MAX_ENTRIES': 5000,
+        },
+    }
+}
+
+# RQ configs
+RQ_QUEUES = {
+    'default': {
+        'USE_REDIS_CACHE': 'default',
+        'DEFAULT_TIMEOUT': 600
     }
 }
 
