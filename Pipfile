@@ -17,6 +17,7 @@ psycopg2 = "*"
 django-redis = "*"
 rq-scheduler = "*"
 django-extensions = "*"
+django-environ = "*"
 
 [requires]
 python_version = "3.7"

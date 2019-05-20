@@ -19,3 +19,6 @@ bash: start
 
 shell_plus: start
 	@docker-compose exec web python manage.py shell_plus
+
+psql: start
+	@docker-compose exec db psql -U postgres

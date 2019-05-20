@@ -6,8 +6,10 @@ RUN mkdir /src
 
 WORKDIR /src
 
-COPY requirements.txt /src/
+COPY Pipfile Pipfile.lock /src/
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir pipenv
+
+RUN pipenv install --system
 
 COPY . /src/
