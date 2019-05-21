@@ -11,36 +11,49 @@ The API is built on Django and Django Rest Framework, Postgres database, Redis q
 5. Flight booking updates
 
 ## Requirements
-- Pyenv (with Python 3.7.2)
-- Pipenv
-- Postgres 11+
-- Redis 3+
+- Docker
+- Docker Compose
 - AWS Account
 
 ## Installation
-First setup `pyenv` on your local machine. Instructions [here](https://github.com/pyenv/pyenv)
+First setup [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/) on your machine.
 
-If you haven't added Python 3.7.2 to your `pyenv`, run the following command:
-```
-pyenv install 3.7.2
-```
-Navigate to the project root and set the local Python version to 3.7:
-```
-pyenv local 3.7.2
-```
-Install `pipenv`:
-```
-pip install pipenv
-```
-Install the project dependencies:
-```
-pipenv install
-```
-Activate the virtual environment:
-```
-pipenv shell
-```
-Run the project:
-```
-pipenv run start
-```
+Start the Docker daemon.
+
+Run the command `make start_logs` and the server should start up with the default settings.
+
+The application will be accessible from `0.0.0.0:8000` on your browser.
+
+You can configure your own environment variables by making a copy of the `.env-sample` file and modifying the values on it.
+
+## Useful Commands
+- `make start`
+
+  Starts the project in the background
+- `make start_logs`
+
+  Starts the project in the foreground with docker output on the terminal
+
+- `make start_build`
+
+  Rebuilds the Docker images and starts the project as in `make start_logs`
+
+- `make stop`
+
+  Stops the Docker containers and cleans up
+
+- `make bash`
+
+  Starts a terminal inside the Docker environment
+
+- `make clean`
+
+  Stops the Docker containers, cleans up the containers and deletes any `.pyc` files
+
+- `make shell_plus`
+
+  Starts the project and creates an interactive Django shell
+
+- `make psql`
+
+  Starts the project and opens `psql` for postgres
