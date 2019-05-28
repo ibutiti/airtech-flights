@@ -1,11 +1,17 @@
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.contrib.postgres.fields import CIEmailField
 from django.db import models
+from rest_framework.authtoken.models import Token
 
 from common.models import BaseModel
 
 class CustomUserManager(UserManager):
     """Override custom user manager"""
+
+    def _create_token(self, user):
+        """Helper method to create a user token on user creation."""
+        return Token.objects.create(user=user)
+
 
     def create_user(self, email, username, first_name, last_name, password=None):
         if not email:
@@ -25,6 +31,7 @@ class CustomUserManager(UserManager):
             user.set_unusable_password()
 
         user.save(using=self._db)
+        self._create_token(user)
         return user
 
     def create_superuser(self, email, username, first_name, last_name, password=None):
@@ -32,6 +39,7 @@ class CustomUserManager(UserManager):
         user.is_admin = True
         user.is_staff = True
         user.save(using=self._db)
+        self._create_token(user)
         return user
 
     def get_by_natural_key(self, email):

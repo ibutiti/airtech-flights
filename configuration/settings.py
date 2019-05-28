@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_rq',
     'rest_framework',
+    'rest_framework.authtoken',
     'authentication',
     'flights',
     'payments',
@@ -38,6 +39,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+
+    )
+}
 
 AUTH_USER_MODEL = 'authentication.User'
 

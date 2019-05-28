@@ -22,3 +22,9 @@ shell_plus: start
 
 psql: start
 	@docker-compose exec db psql -U postgres
+
+makemigrations:
+	@python manage.py makemigrations
+
+migrate:
+	@python manage.py migrate

@@ -5,6 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 autopep8 = "*"
+coverage = "*"
 
 [packages]
 django = "*"
@@ -25,3 +26,5 @@ python_version = "3.7"
 
 [scripts]
 start = "python manage.py runserver"
+test = "python manage.py test"
+test_cov = "coverage run --source='.' --rcfile='.circleci/.coveragerc' manage.py test -v 2 && coverage report"
