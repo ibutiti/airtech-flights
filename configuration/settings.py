@@ -9,7 +9,7 @@ SECRET_KEY = env('SECRET_KEY', default='some_secret_key')
 
 DEBUG = env('DEBUG', default='False')
 
-ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -45,8 +45,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-
-    )
+    ),
+    'EXCEPTION_HANDLER': 'common.middleware.custom_exception_handler'
 }
 
 AUTH_USER_MODEL = 'authentication.User'
