@@ -6,6 +6,7 @@ services:
     image: redis:5
     hostname: redis
   web:
+    restart: always
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
