@@ -18,5 +18,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('auth/', include('authentication.urls', namespace='authentication')),
     path('django-rq/', include('django_rq.urls'))
 ]
