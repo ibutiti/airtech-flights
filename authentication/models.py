@@ -10,17 +10,18 @@ class CustomUserManager(UserManager):
 
     def _create_token(self, user):
         """Helper method to create a user token on user creation."""
+
         return Token.objects.create(user=user)
 
 
-    def create_user(self, email, username, first_name, last_name, password=None):
+    def create_user(self, email, first_name, last_name, password=None):
+
         if not email:
             raise ValueError('Users must have an email address')
-        if not username:
-            raise ValueError('Users must have a username')
+        normalized_email = self.normalize_email(email)
         user = self.model(
-            username=username,
-            email=self.normalize_email(email),
+            email=normalized_email,
+            username=normalized_email,
             first_name=first_name.strip(),
             last_name=last_name.strip()
         )
@@ -32,17 +33,21 @@ class CustomUserManager(UserManager):
 
         user.save(using=self._db)
         self._create_token(user)
+
         return user
 
-    def create_superuser(self, email, username, first_name, last_name, password=None):
-        user = self.create_user(email, username, first_name, last_name, password)
+    def create_superuser(self, email, first_name, last_name, password=None):
+
+        user = self.create_user(email, first_name, last_name, password)
         user.is_admin = True
         user.is_staff = True
+        user.is_superuser = True
         user.save(using=self._db)
-        self._create_token(user)
+
         return user
 
     def get_by_natural_key(self, email):
+
         return self.get(email=email)
 
 
@@ -62,7 +67,9 @@ class User(AbstractUser, BaseModel):
 
     @property
     def full_name(self):
+
         return self.get_full_name()
 
     def __str__(self):
+
         return self.email
