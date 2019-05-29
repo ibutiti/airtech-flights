@@ -10,7 +10,7 @@ class UserSignUpViewset(ViewSet):
     '''Sign up a user to Airtech'''
 
     def create(self, request):
-        '''POST request to sign up user'''
+        '''Sign up and create a user account'''
 
         serializer = UserSignUpSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

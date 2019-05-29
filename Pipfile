@@ -20,6 +20,9 @@ django-redis = "*"
 rq-scheduler = "*"
 django-extensions = "*"
 django-environ = "*"
+coreapi = "*"
+pygments = "*"
+markdown = "*"
 
 [requires]
 python_version = "3.7"
