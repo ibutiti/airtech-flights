@@ -2,7 +2,6 @@ import datetime
 import uuid
 
 from django.db import models
-from django.db.models.signals import pre_delete, post_delete
 
 
 class SoftDeletionQueryset(models.QuerySet):
@@ -52,10 +51,8 @@ class SoftDeletionModelMixin(models.Model):
         abstract = True
 
     def delete(self):
-        pre_delete.send(sender=self.__class__, instance=self, using=self._state.db)
         self.deleted_at = datetime.datetime.utcnow()
         self.save()
-        post_delete.send(sender=self.__class__, instance=self, using=self._state.db)
 
     def hard_delete(self):
         super().delete()

@@ -22,9 +22,9 @@ Start the Docker daemon.
 
 Run the command `make start_logs` and the server should start up with the default settings.
 
-The application will be accessible from `0.0.0.0:8000` on your browser.
+The application will be accessible from `0.0.0.0:8000` on your browser or API Client (Such as [Postman](https://www.getpostman.com/)).
 
-You can configure your own environment variables by making a copy of the `.env-sample` file and modifying the values on it.
+You can configure your own environment variables by making a copy of the `.env-sample` file and modifying the values on it. The file as is is appropriately setup for the development environment, just rename it to `.env`.
 
 ## Useful Commands
 - `make start`
@@ -57,3 +57,6 @@ You can configure your own environment variables by making a copy of the `.env-s
 - `make psql`
 
   Starts the project and opens `psql` for postgres
+
+## Documentation
+The app documentation is accessible at `/docs/`.
