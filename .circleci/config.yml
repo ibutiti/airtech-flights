@@ -33,9 +33,9 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            pipenv run "python manage.py test"
-            pipenv run "coverage run --source='.' --rcfile='.circleci/.coveragerc' manage.py test"
-            pipenv run "coverage report && coverage html"
+            pipenv run python manage.py test
+            pipenv run coverage run --source='.' --rcfile='.circleci/.coveragerc' manage.py test
+            pipenv run coverage report && coverage html
       - store_test_results:
           path: test-results
       - store_artifacts:
