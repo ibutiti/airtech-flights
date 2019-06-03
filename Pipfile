@@ -4,6 +4,8 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+autopep8 = "*"
+coverage = "*"
 
 [packages]
 django = "*"
@@ -12,9 +14,20 @@ django-rq = "*"
 boto3 = "*"
 django-storages = "*"
 stripe = "*"
+gunicorn = "*"
+psycopg2 = "*"
+django-redis = "*"
+rq-scheduler = "*"
+django-extensions = "*"
+django-environ = "*"
+coreapi = "*"
+pygments = "*"
+markdown = "*"
 
 [requires]
 python_version = "3.7"
 
 [scripts]
 start = "python manage.py runserver"
+test = "python manage.py test"
+test_cov = "coverage run --source='.' --rcfile='.circleci/.coveragerc' manage.py test -v 2 && coverage report"

@@ -1,0 +1,12 @@
+[run]
+omit =
+    *venv*
+    */__init__.py
+    */admin.py
+    */apps.py
+    */urls.py
+    *__pycache__*
+    */migrations/*
+    *test*
+    configuration/*
+    *manage.py

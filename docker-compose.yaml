@@ -1,0 +1,39 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./.postgresdata:/var/lib/postgresql/data
+  redis:
+    image: redis:5
+    hostname: redis
+  web:
+    restart: always
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/src
+    ports:
+        - "8000:8000"
+    depends_on:
+      - db
+  scheduler:
+    build: .
+    command: python manage.py rqscheduler
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+      - redis
+    hostname: scheduler
+  worker:
+    build: .
+    command: python manage.py rqworker default
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+      - redis
+    hostname: worker

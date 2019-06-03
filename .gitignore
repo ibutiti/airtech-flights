@@ -6,8 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+# vscode stuff
+.vscode/
+
 # Distribution / packaging
 .Python
+.DS_Store
 build/
 develop-eggs/
 dist/
@@ -55,6 +59,7 @@ coverage.xml
 *.log
 local_settings.py
 db.sqlite3
+.postgresdata
 
 # Flask stuff:
 instance/
