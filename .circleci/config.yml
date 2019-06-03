@@ -22,8 +22,7 @@ jobs:
           name: Setup Test Environment
           command: |
             sudo pip install pipenv
-            pipenv install
-            pipenv install coverage
+            pipenv install --dev
       - save_cache:
           key: deps10-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
           paths:
