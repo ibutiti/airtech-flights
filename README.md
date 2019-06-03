@@ -3,6 +3,8 @@ An flight booking API for a fictional company Airtech to automate their current 
 
 The API is built on Django and Django Rest Framework, Postgres database, Redis queues and caches. It is configured for deployment to AWS.
 
+[![CircleCI](https://circleci.com/gh/ibutiti/airtech-flights/tree/dev.svg?style=svg)](https://circleci.com/gh/ibutiti/airtech-flights/tree/dev)
+
 ## Features
 1. User registration and login
 2. Booking and reserving flight tickets
