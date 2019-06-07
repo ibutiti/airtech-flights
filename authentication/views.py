@@ -30,7 +30,6 @@ class UserLoginViewset(ViewSet):
 
     def create(self, request):
         '''Login a user'''
-        import pdb; pdb.set_trace()
         data = request.data
         if not data.get('email'):
             raise ValidationError('Email is required')

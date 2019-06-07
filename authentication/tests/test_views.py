@@ -109,7 +109,6 @@ class UserLoginViewsetTestCase(AbstractTestCase):
 
     def test_logs_in_with_valid_credentials(self):
         '''Test logs in with valid credentials'''
-        import pdb; pdb.set_trace()
 
         response = self.client.post(self.url, data=self.valid_credentials)
 
