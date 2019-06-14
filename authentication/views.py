@@ -37,17 +37,17 @@ class UserLoginViewset(ViewSet):
         if not data.get('password'):
             raise ValidationError('Password is required')
         # validate password and retrieve token
-        user = authenticate(
-            email=data['email'],
-            password=data['password'],
-            request=request
-        )
-        if user is not None:
+        try:
+            user = User.objects.get(email=data['email'])
+        except User.DoesNotExist:
+            raise AuthenticationFailed
+
+        if user.check_password(data.get('password')):
             token, _ = Token.objects.get_or_create(user=user)
-            message = {
+            data = {
                 'message': 'Login successful',
                 'token': token.key
             }
-            return Response(data=message, status=status.HTTP_200_OK)
-        else:
-            raise AuthenticationFailed
+            return Response(data=data, status=status.HTTP_200_OK)
+
+        raise AuthenticationFailed

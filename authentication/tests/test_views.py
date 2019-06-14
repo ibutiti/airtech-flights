@@ -76,7 +76,7 @@ class UserSignupViewsetTestCase(AbstractTestCase):
                 "{'error': {'email': ['Enter a valid email address.']}}"
             )
 
-        with self.subTest('Test rejects any missing fields'):
+        with self.subTest('Test rejects any missing required fields'):
 
             _fields = ('first_name', 'last_name', 'email', 'password')
 
@@ -102,6 +102,7 @@ class UserLoginViewsetTestCase(AbstractTestCase):
         self.client = APIClient()
         password = 'some password'
         self.user.set_password(password)
+        self.user.save()
         self.valid_credentials = {
             'email': self.user.email,
             'password': password
@@ -115,5 +116,5 @@ class UserLoginViewsetTestCase(AbstractTestCase):
         token = Token.objects.get(user=self.user).key
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn(response.json().get('token'), token)
-        self.assertIn(str(response.json()), 'Login successful')
+        self.assertIn(token, response.json().get('token'))
+        self.assertIn('Login successful', str(response.json()))
