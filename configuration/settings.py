@@ -72,6 +72,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'configuration.wsgi.application'
 
 TEST_RUNNER = 'xmlrunner.extra.djangotestrunner.XMLTestRunner'
+TEST_OUTPUT_DIR = 'test-results'
+TEST_OUTPUT_FILE_NAME = 'results.xml'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
