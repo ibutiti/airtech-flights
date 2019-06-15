@@ -57,13 +57,14 @@ class User(AbstractUser, BaseModel):
     first_name = models.CharField(null=False, blank=False, max_length=50)
     last_name = models.CharField(null=False, blank=False, max_length=50)
     verified_email = models.BooleanField(default=False)
+    passport_photo = models.ImageField(null=True, blank=True, upload_to='passport_photos')
 
     # configs
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
     EMAIL_FIELD = 'email'
-    objects = CustomUserManager()
 
+    objects = CustomUserManager()
 
     @property
     def full_name(self):
