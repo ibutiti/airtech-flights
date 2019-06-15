@@ -86,7 +86,7 @@ DATABASES = {
 
 CACHES = {
     'default': env.cache(
-        default='rediscache://redis:6379/1?client_class=django_redis.client.DefaultClient',
+        default='rediscache://127.0.0.1:6379/1?client_class=django_redis.client.DefaultClient',
     )
 }
 

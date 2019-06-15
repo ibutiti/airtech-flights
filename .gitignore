@@ -60,6 +60,7 @@ TEST*.xml
 *.log
 local_settings.py
 db.sqlite3
+.postgresdata
 
 # Flask stuff:
 instance/
