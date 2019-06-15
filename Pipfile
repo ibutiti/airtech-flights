@@ -23,6 +23,7 @@ django-environ = "*"
 coreapi = "*"
 pygments = "*"
 markdown = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"
