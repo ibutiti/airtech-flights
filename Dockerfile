@@ -10,6 +10,6 @@ COPY Pipfile Pipfile.lock /src/
 
 RUN pip install --no-cache-dir pipenv
 
-RUN pipenv install --system
+RUN pipenv install --system --dev
 
 COPY . /src/
