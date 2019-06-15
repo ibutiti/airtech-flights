@@ -31,3 +31,4 @@ migrate:
 
 test:
 	@python manage.py test
+	@rm -rf test-results
