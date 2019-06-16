@@ -19,7 +19,8 @@ from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('authentication.urls', namespace='authentication')),
+    path('auth/', include('authentication.urls')),
     path('django-rq/', include('django_rq.urls')),
-    path('docs/', include_docs_urls(title='Airtech Flights'))
+    path('docs/', include_docs_urls(title='Airtech Flights')),
+    path('user/', include('userprofile.urls')),
 ]
