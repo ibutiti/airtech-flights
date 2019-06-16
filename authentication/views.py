@@ -1,7 +1,10 @@
-from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from rest_framework.exceptions import AuthenticationFailed, ValidationError
+from rest_framework.exceptions import (
+    AuthenticationFailed,
+    ValidationError,
+)
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
@@ -11,6 +14,8 @@ from authentication.serializers import UserSignUpSerializer
 
 class UserSignUpViewset(ViewSet):
     '''Sign up a user to Airtech'''
+
+    permission_classes = (AllowAny,)
 
     def create(self, request):
         '''Sign up and create a user account'''
@@ -27,6 +32,8 @@ class UserSignUpViewset(ViewSet):
 
 class UserLoginViewset(ViewSet):
     '''Login a user'''
+
+    permission_classes = (AllowAny,)
 
     def create(self, request):
         '''Login a user'''
