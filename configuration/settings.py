@@ -48,7 +48,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
-    'EXCEPTION_HANDLER': 'common.middleware.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'common.middleware.drf_custom_handler'
 }
 
 AUTH_USER_MODEL = 'authentication.User'

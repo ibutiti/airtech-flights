@@ -18,3 +18,8 @@ class PassportPhotoSerializer(serializers.ModelSerializer):
         validated_data['user'] = self.context['user']
 
         return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        '''Delete existing photo before save'''
+        instance.file.delete(save=False)
+        return super().update(instance, validated_data)

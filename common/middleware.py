@@ -1,3 +1,4 @@
+import logging
 from django.core import exceptions
 from django.http import Http404
 from rest_framework import status
@@ -5,11 +6,12 @@ from rest_framework import exceptions as rest_exceptions
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
 
+logger = logging.getLogger(name=__name__)
 
-def custom_exception_handler(exc, context):
-    '''Custom exception handler'''
-
-    if isinstance(exc, Http404):
+def drf_custom_handler(exc, context):
+    '''Custom DRF exception handler'''
+    logger.exception(exc.detail)
+    if isinstance(exc, (Http404, rest_exceptions.NotFound)):
         return Response({'error': 'NotFound'}, status=status.HTTP_404_NOT_FOUND)
 
     elif isinstance(exc, rest_exceptions.AuthenticationFailed):
@@ -18,14 +20,13 @@ def custom_exception_handler(exc, context):
     elif isinstance(exc, exceptions.PermissionDenied):
         return Response({'error': 'Permission Denied'}, status=status.HTTP_403_FORBIDDEN)
 
-    elif isinstance(exc, rest_exceptions.APIException):
-        return Response({'error': exc.detail}, status=status.HTTP_400_BAD_REQUEST)
-
     response = exception_handler(exc, context)
 
     if response:
-
         return response
+
+    elif isinstance(exc, rest_exceptions.APIException):
+        return Response({'error': exc.detail}, status=status.HTTP_400_BAD_REQUEST)
 
     data = {
         'error': 'InternalServerError',

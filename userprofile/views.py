@@ -1,9 +1,7 @@
 '''
 User profile views module
 '''
-from django.shortcuts import get_object_or_404
-
-from rest_framework import status
+from rest_framework import exceptions, status
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -22,12 +20,14 @@ class UserPassportPhotoViewset(ModelViewSet):
     def get_queryset(self):
         '''Filter the queryset by user to make sure we only return the user's photo'''
         queryset = super().get_queryset()
-
         return queryset.filter(user=self.request.user).all()
 
     def get_object(self):
-        '''Fail early and return a 404 if passport photo doesn't exist'''
-        return get_object_or_404(self.get_queryset())
+        '''Fail early and return a 404 if passport photo does not exist'''
+        try:
+            return self.get_queryset().get(id=self.kwargs.get('pk'))
+        except PassportPhoto.DoesNotExist:
+            raise exceptions.NotFound
 
     def get_serializer_context(self):
         '''Inject the request user to the serializer context, used at model create stage'''
@@ -48,3 +48,7 @@ class UserPassportPhotoViewset(ModelViewSet):
             }
             return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
         return super().create(request)
+
+    def partial_update(self, request, pk=None):
+        '''Disable the partial update, endpoint expects only 1 field'''
+        raise exceptions.MethodNotAllowed(method='PATCH', code=status.HTTP_405_METHOD_NOT_ALLOWED)

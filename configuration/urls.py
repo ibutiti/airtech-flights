@@ -24,3 +24,6 @@ urlpatterns = [
     path('docs/', include_docs_urls(title='Airtech Flights')),
     path('user/', include('userprofile.urls')),
 ]
+
+handler_404 = 'common.middleware.handle_django_404'
+handler_500 = 'common.middleware.handle_django_500'
