@@ -6,11 +6,10 @@ from rest_framework import exceptions as rest_exceptions
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
 
-logger = logging.getLogger(name=__name__)
+logger = logging.getLogger(__name__)
 
 def drf_custom_handler(exc, context):
     '''Custom DRF exception handler'''
-    logger.exception(exc.detail)
     if isinstance(exc, (Http404, rest_exceptions.NotFound)):
         return Response({'error': 'NotFound'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -32,5 +31,5 @@ def drf_custom_handler(exc, context):
         'error': 'InternalServerError',
         'error_description': 'An error occurred'
     }
-
+    logger.exception(exc, msg=context)
     return Response(data=data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
