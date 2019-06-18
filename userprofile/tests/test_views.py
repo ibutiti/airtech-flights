@@ -125,6 +125,41 @@ class UserProfileViewsetTestCase(TestBase):
         self.assertIn('Upload a valid image', str(response_data))
 
 
+# Test DELETE
+
+    def test_delete_photo_success(self):
+        '''Test deleting a photo success'''
+        self.client.force_authenticate(self.user_with_photo)
+        url = reverse('userprofile:passport-photo-detail',
+                      kwargs={'pk': self.user_with_photo.passport_photo.pk})
+
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_delete_photo_unauthenticated(self):
+        '''Test deleting a photo when not authenticated'''
+        client = APIClient()
+        url = reverse('userprofile:passport-photo-detail',
+                      kwargs={'pk': self.user_with_photo.passport_photo.pk})
+
+        response = client.delete(url)
+        response_data = response.data
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertIn('Authentication credentials were not provided.', str(response_data))
+
+    def test_delete_another_users_photo(self):
+        '''Test deleting another user's photo fails'''
+        url = reverse('userprofile:passport-photo-detail',
+                      kwargs={'pk': self.user_with_photo.passport_photo.pk})
+
+        response = self.client.delete(url)
+        response_data = response.data
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertIn('NotFound', str(response_data))
+
 # Test GET
 
     def test_get_passport_photo_success(self):
