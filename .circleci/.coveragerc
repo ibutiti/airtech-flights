@@ -10,4 +10,4 @@ omit =
     *test*
     configuration/*
     *manage.py
-    common/
+    common/*
