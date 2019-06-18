@@ -7,6 +7,8 @@ The API is built on Django and Django Rest Framework, Postgres database, Redis q
 [![Test Coverage](https://api.codeclimate.com/v1/badges/6bad4714d5087bcd1858/test_coverage)](https://codeclimate.com/github/ibutiti/airtech-flights/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/6bad4714d5087bcd1858/maintainability)](https://codeclimate.com/github/ibutiti/airtech-flights/maintainability)
 
+[API Documentation](https://documenter.getpostman.com/view/3400181/S1Zw9B8Q)
+
 ## Features
 1. User registration and login
 2. Booking and reserving flight tickets
