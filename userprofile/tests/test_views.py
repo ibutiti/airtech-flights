@@ -75,7 +75,7 @@ class UserProfileViewsetTestCase(TestBase):
         response_data = response.data
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn(self.test_photo.name[:-4], str(response_data))
+        self.assertIn(self.test_photo.name.split('.')[0], str(response_data))
 
     def test_replace_photo_unauthenticated(self):
         '''Test replacing a photo when not authenticated'''
@@ -126,3 +126,49 @@ class UserProfileViewsetTestCase(TestBase):
 
 
 # Test GET
+
+    def test_get_passport_photo_success(self):
+        '''Test a successful get of a passport photo'''
+        self.client.force_authenticate(self.user_with_photo)
+
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn(self.user_with_photo.passport_photo.file.name.split('.')[0], str(response.data))
+
+    def get_passport_photo_fails_when_unauthenticated(self):
+        '''Test get photo when not authenticated'''
+        client = APIClient()
+
+        response = client.get(self.url)
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertIn('Authentication credentials were not provided', str(response.data))
+
+    def get_passport_photo_when_user_has_none(self):
+        '''Test get passport photo when a user has none'''
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('{}', str(response.data))
+
+    def test_get_passport_photo_via_id_success(self):
+        '''Test get passport photo via its id success'''
+        self.client.force_authenticate(self.user_with_photo)
+        url = reverse('userprofile:passport-photo-detail',
+                      kwargs={'pk': self.user_with_photo.passport_photo.pk})
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn(self.user_with_photo.passport_photo.file.name.split('.')[0], str(response.data))
+
+    def test_get_another_users_photo(self):
+        '''Test get another user's photo fails'''
+        url = reverse('userprofile:passport-photo-detail',
+                      kwargs={'pk': self.user_with_photo.passport_photo.pk})
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertIn('NotFound', str(response.data))
