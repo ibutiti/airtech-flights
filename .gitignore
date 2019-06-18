@@ -50,6 +50,8 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
+TEST*.xml
+test-results/
 
 # Translations
 *.mo
@@ -107,3 +109,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# local db files
+.postgresdata/

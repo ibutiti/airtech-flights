@@ -6,6 +6,9 @@ verify_ssl = true
 [dev-packages]
 autopep8 = "*"
 coverage = "*"
+unittest-xml-reporting = "*"
+rope = "*"
+dj-inmemorystorage = "*"
 
 [packages]
 django = "*"
@@ -23,6 +26,7 @@ django-environ = "*"
 coreapi = "*"
 pygments = "*"
 markdown = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"

@@ -23,11 +23,12 @@ shell_plus: start
 psql: start
 	@docker-compose exec db psql -U postgres
 
-makemigrations:
+migrations:
 	@python manage.py makemigrations
 
 migrate:
 	@python manage.py migrate
 
 test:
-	@python manage.py test
+	@python manage.py test --settings=configuration.test_settings
+	@rm -rf test-results

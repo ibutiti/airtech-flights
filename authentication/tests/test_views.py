@@ -60,7 +60,7 @@ class UserSignupViewsetTestCase(AbstractTestCase):
             self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
             self.assertEqual(
                 str(response.json()),
-                "{'error': {'email': ['user with this email already exists.']}}"
+                "{'email': ['user with this email already exists.']}"
             )
 
         with self.subTest('Test rejects invalid email'):
@@ -73,7 +73,7 @@ class UserSignupViewsetTestCase(AbstractTestCase):
             self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
             self.assertEqual(
                 str(response.json()),
-                "{'error': {'email': ['Enter a valid email address.']}}"
+                "{'email': ['Enter a valid email address.']}"
             )
 
         with self.subTest('Test rejects any missing required fields'):
