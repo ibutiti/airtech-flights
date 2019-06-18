@@ -1,0 +1,128 @@
+'''
+User profile endpoint tests
+'''
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APIClient
+
+from userprofile.tests.test_mixin import TestBase
+
+
+class UserProfileViewsetTestCase(TestBase):
+
+    def setUp(self):
+        '''Setup test case'''
+        super().setUp()
+        self.client.force_authenticate(user=self.user_no_photo)
+        self.url = reverse('userprofile:passport-photo-list')
+
+# Test POST
+
+    def test_create_with_unauthenticated_user(self):
+        '''Test add photo as an unauthenticated user.'''
+        client = APIClient()
+        response = client.post(self.url, data={'file': self.test_photo})
+        response_data = response.data
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertIn('Authentication credentials were not provided.', str(response_data))
+
+    def test_create_success(self):
+        '''Test adds passport photo successfully'''
+        response = self.client.post(self.url, data={'file': self.test_photo})
+        response_data = response.data
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertIn(self.test_photo.name, str(response_data))
+
+    def test_create_twice(self):
+        '''Test add passport photo to user with a passport photo already'''
+        self.client.force_authenticate(self.user_with_photo)
+
+        response = self.client.post(self.url, data={'file': self.test_photo})
+        response_data = response.data
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('A passport photo already exists. Use the PUT endpoint to replace it.',
+                      str(response_data))
+
+    def test_create_no_payload(self):
+        '''Test add photo with no photo payload'''
+        response = self.client.post(self.url)
+        response_data = response.data
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('No file was submitted', str(response_data))
+
+    def test_create_non_photo_file(self):
+        '''Test add photo with a non photo file in payload'''
+        response = self.client.post(self.url, data={'file': self.non_photo_file})
+        response_data = response.data
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('Upload a valid image', str(response_data))
+
+
+# Test PUT
+
+    def test_replace_photo_success(self):
+        '''Test replacing a photo success'''
+        self.client.force_authenticate(self.user_with_photo)
+        url = reverse('userprofile:passport-photo-detail',
+                      kwargs={'pk': self.user_with_photo.passport_photo.pk})
+
+        response = self.client.put(url, data={'file': self.test_photo})
+        response_data = response.data
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn(self.test_photo.name[:-4], str(response_data))
+
+    def test_replace_photo_unauthenticated(self):
+        '''Test replacing a photo when not authenticated'''
+        client = APIClient()
+        url = reverse('userprofile:passport-photo-detail',
+                      kwargs={'pk': self.user_with_photo.passport_photo.pk})
+
+        response = client.put(url, data={'file': self.test_photo})
+        response_data = response.data
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertIn('Authentication credentials were not provided.', str(response_data))
+
+    def test_replace_another_users_photo(self):
+        '''Test replacing another user's photo fails'''
+        url = reverse('userprofile:passport-photo-detail',
+                      kwargs={'pk': self.user_with_photo.passport_photo.pk})
+
+        response = self.client.put(url, data={'file': self.test_photo})
+        response_data = response.data
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertIn('NotFound', str(response_data))
+
+    def test_replace_photo_no_photo_in_payload(self):
+        '''Test replacing a photo with no photo'''
+        self.client.force_authenticate(self.user_with_photo)
+        url = reverse('userprofile:passport-photo-detail',
+                      kwargs={'pk': self.user_with_photo.passport_photo.pk})
+
+        response = self.client.put(url)
+        response_data = response.data
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('No file was submitted', str(response_data))
+
+    def test_replace_photo_with_non_photo(self):
+        '''Test replacing a photo with a non photo file'''
+        self.client.force_authenticate(self.user_with_photo)
+        url = reverse('userprofile:passport-photo-detail',
+                      kwargs={'pk': self.user_with_photo.passport_photo.pk})
+
+        response = self.client.put(url, data={'file': self.non_photo_file})
+        response_data = response.data
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('Upload a valid image', str(response_data))
+
+
+# Test GET

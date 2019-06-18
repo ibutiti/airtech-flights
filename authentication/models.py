@@ -96,8 +96,10 @@ class User(AbstractUser, BaseModel):
 
     def delete_passport_photo(self):
         '''Passport photo delete helper that executes'''
-        if self.passport_photo:
+        try:
             self.passport_photo.delete()
+        except User.passport_photo.RelatedObjectDoesNotExist:
+            pass
 
     def __str__(self):
         return self.email
