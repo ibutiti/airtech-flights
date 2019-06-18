@@ -14,15 +14,13 @@ class Flight(BaseModel):
         max_length=16
     )
     origin = models.CharField(
-        default='Open',
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         max_length=16
     )
     destination = models.CharField(
-        default='Open',
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         max_length=16
     )
     departure_time = models.DateTimeField(
@@ -34,7 +32,6 @@ class Flight(BaseModel):
         blank=False
     )
     seats = models.IntegerField(
-        max_length=5,
         null=True,
         blank=True
     )

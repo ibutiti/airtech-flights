@@ -1,3 +1,15 @@
-from django.shortcuts import render
+'''
+Flight views
+'''
+from rest_framework.permissions import IsAdminUser
+from rest_framework.viewsets import ModelViewSet
 
-# Create your views here.
+from flights.models import Flight
+from flights.serializers import FlightSerializer
+
+
+class FlightViewSet(ModelViewSet):
+    '''Flight management view set'''
+    serializer_class = FlightSerializer
+    queryset = Flight.objects.all()
+    permission_classes = (IsAdminUser,)
