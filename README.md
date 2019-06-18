@@ -65,4 +65,4 @@ You can configure your own environment variables by making a copy of the `.env-s
   Starts the project and opens `psql` for postgres
 
 ## Documentation
-The app documentation is accessible at `/docs/`.
+The app documentation is accessible [here](https://documenter.getpostman.com/view/3400181/S1Zw9B8Q).
