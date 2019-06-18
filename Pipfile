@@ -27,6 +27,7 @@ coreapi = "*"
 pygments = "*"
 markdown = "*"
 pillow = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.7"
