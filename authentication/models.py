@@ -53,11 +53,24 @@ class CustomUserManager(UserManager):
 
 class User(AbstractUser, BaseModel):
 
-    email = CIEmailField(unique=True, null=False, blank=False)
-    first_name = models.CharField(null=False, blank=False, max_length=50)
-    last_name = models.CharField(null=False, blank=False, max_length=50)
-    verified_email = models.BooleanField(default=False)
-    passport_photo = models.ImageField(null=True, blank=True, upload_to='passport_photos')
+    email = CIEmailField(
+        unique=True,
+        null=False,
+        blank=False
+    )
+    first_name = models.CharField(
+        null=False,
+        blank=False,
+        max_length=50
+    )
+    last_name = models.CharField(
+        null=False,
+        blank=False,
+        max_length=50
+    )
+    verified_email = models.BooleanField(
+        default=False
+    )
 
     # configs
     USERNAME_FIELD = 'email'
@@ -71,6 +84,22 @@ class User(AbstractUser, BaseModel):
 
         return self.get_full_name()
 
-    def __str__(self):
+    def delete(self):
+        '''Before user soft delete, delete any saved passport photo'''
+        self.delete_passport_photo()
+        super().delete()
 
+    def hard_delete(self, **kwargs):
+        '''Before user hard delete, delete any saved passport photo'''
+        self.delete_passport_photo()
+        super().hard_delete(**kwargs)
+
+    def delete_passport_photo(self):
+        '''Passport photo delete helper that executes'''
+        try:
+            self.passport_photo.delete()
+        except User.passport_photo.RelatedObjectDoesNotExist:
+            pass
+
+    def __str__(self):
         return self.email

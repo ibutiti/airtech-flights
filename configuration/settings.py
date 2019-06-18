@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'payments',
     'reservations',
     'tickets',
+    'userprofile',
 ]
 
 MIDDLEWARE = [
@@ -42,11 +43,12 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        'configuration.authentication.BearerTokenAuthentication',
     ),
-    'EXCEPTION_HANDLER': 'common.middleware.custom_exception_handler'
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'EXCEPTION_HANDLER': 'common.middleware.drf_custom_handler'
 }
 
 AUTH_USER_MODEL = 'authentication.User'
@@ -140,11 +142,13 @@ STATIC_URL = '/static/'
 # aws file storage settings via django-storages
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_DEFAULT_ACL = 'public-read'
-AWS_BUCKET_ACL = AWS_DEFAULT_ACL
-AWS_AUTO_CREATE_BUCKET = True
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
+AWS_AUTO_CREATE_BUCKET = True
+AWS_BUCKET_ACL = AWS_DEFAULT_ACL
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_FILE_OVERWRITE = False
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME', default='your-chosen-s3-bucket-name')
 AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME', default='your-bucket-aws-region')
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='obtained-from-your-aws-console')

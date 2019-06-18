@@ -37,9 +37,9 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            pipenv run python manage.py test --noinput
+            pipenv run python manage.py test --settings=configuration.test_settings
             ./cc-test-reporter before-build
-            pipenv run coverage run --source='.' --rcfile='.circleci/.coveragerc' manage.py test --noinput
+            pipenv run coverage run --source='.' --rcfile='.circleci/.coveragerc' manage.py test --settings=configuration.test_settings
             pipenv run coverage report
             pipenv run coverage xml
             ./cc-test-reporter after-build --exit-code 0

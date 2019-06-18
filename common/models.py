@@ -54,15 +54,20 @@ class SoftDeletionModelMixin(models.Model):
         self.deleted_at = datetime.datetime.utcnow()
         self.save()
 
-    def hard_delete(self):
-        super().delete()
+    def hard_delete(self, **kwargs):
+        super().delete(**kwargs)
 
 
 class TimeStampedModelMixin(models.Model):
     """Mixin implementing timestamps to models"""
 
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
-    updated_at = models.DateField(auto_now=True)
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        editable=False
+    )
+    updated_at = models.DateField(
+        auto_now=True
+    )
 
     class Meta:
         abstract = True
@@ -71,7 +76,11 @@ class TimeStampedModelMixin(models.Model):
 class ModelDefaultFieldsMixin(models.Model):
     """Mixin implementing default fields for all models."""
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
 
     class Meta:
         abstract = True

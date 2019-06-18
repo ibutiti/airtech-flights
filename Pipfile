@@ -7,6 +7,8 @@ verify_ssl = true
 autopep8 = "*"
 coverage = "*"
 unittest-xml-reporting = "*"
+rope = "*"
+dj-inmemorystorage = "*"
 
 [packages]
 django = "*"
