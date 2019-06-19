@@ -9,6 +9,9 @@ from userprofile.tests.test_mixin import TestBase
 
 
 class UserProfileViewsetTestCase(TestBase):
+    '''
+    User profile viewset test case
+    '''
 
     def setUp(self):
         '''Setup test case'''
