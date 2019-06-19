@@ -118,3 +118,28 @@ class UserLoginViewsetTestCase(AbstractTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn(token, response.json().get('token'))
         self.assertIn('Login successful', str(response.json()))
+
+    def test_login_without_email_or_password_fails(self):
+        '''Test login without a required parameter'''
+
+        for field in ('email', 'password'):
+            credentials = dict(**self.valid_credentials)
+            with self.subTest(f'Login fails when {field} is missing'):
+                del credentials[field]
+                response = self.client.post(self.url, data=credentials)
+
+                token = Token.objects.get(user=self.user).key
+
+                self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+                self.assertNotIn(token, str(response.json()))
+                self.assertIn(f'{field.title()} is required', str(response.json()))
+
+    def test_login_with_nonexistent_user(self):
+        '''Test login fails with nonexistent user'''
+        self.valid_credentials['email'] = 'nonexistent@example.com'
+        response = self.client.post(self.url, data=self.valid_credentials)
+
+        token = Token.objects.get(user=self.user).key
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertIn('Authentication Failed', str(response.json()))

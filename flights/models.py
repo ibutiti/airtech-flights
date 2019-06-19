@@ -37,4 +37,4 @@ class Flight(BaseModel):
     )
 
     def __str__(self):
-        return f'Flight {str(self.id)[5]} {str(self.departure_time)}: {self.origin} -> {self.destination}'
+        return f'Flight {str(self.id)[:5]} {str(self.departure_time)}: {self.origin} -> {self.destination}'
