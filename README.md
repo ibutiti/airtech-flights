@@ -6,8 +6,7 @@ The API is built on Django and Django Rest Framework, Postgres database, Redis q
 [![CircleCI](https://circleci.com/gh/ibutiti/airtech-flights/tree/master.svg?style=svg)](https://circleci.com/gh/ibutiti/airtech-flights/tree/master)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/6bad4714d5087bcd1858/test_coverage)](https://codeclimate.com/github/ibutiti/airtech-flights/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/6bad4714d5087bcd1858/maintainability)](https://codeclimate.com/github/ibutiti/airtech-flights/maintainability)
-
-[API Documentation](https://documenter.getpostman.com/view/3400181/S1Zw9B8Q)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/1012bd2ad8b6ff4d6bdf)
 
 ## Features
 1. User registration and login
