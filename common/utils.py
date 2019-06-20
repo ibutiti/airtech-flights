@@ -10,4 +10,5 @@ class ChoiceEnum(Enum):
     '''
     @classmethod
     def choices(cls):
+        '''Return choices usable in model fields'''
         return tuple((choice.name, choice.value) for choice in cls)
