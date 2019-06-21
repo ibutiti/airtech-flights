@@ -31,5 +31,4 @@ def drf_custom_handler(exc, context):
         'error': 'InternalServerError',
         'error_description': 'An error occurred'
     }
-    logger.exception(exc, msg=context)
     return Response(data=data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

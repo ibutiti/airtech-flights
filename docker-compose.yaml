@@ -12,11 +12,13 @@ services:
   web:
     restart: always
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn configuration.wsgi:application --bind 0.0.0.0:8000 --workers 4 --name airtech --reload
     volumes:
       - .:/src
     ports:
-        - "8000:8000"
+      - "8000:8000"
+    expose:
+      - 8000
     depends_on:
       - db
       - redis
@@ -34,3 +36,9 @@ services:
       - db
       - redis
     hostname: worker
+  nginx:
+    build: ./nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - web
