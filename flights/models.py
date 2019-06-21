@@ -32,9 +32,15 @@ class Flight(BaseModel):
         blank=False
     )
     seats = models.IntegerField(
-        null=True,
-        blank=True
+        default=0,
+        null=False,
+        blank=False
     )
+
+    @property
+    def available_seats(self):
+        '''Number of available seats on the flight'''
+        return self.seats - self.tickets.count()
 
     def __str__(self):
         return f'Flight {str(self.id)[:5]} {str(self.departure_time)}: {self.origin} -> {self.destination}'
