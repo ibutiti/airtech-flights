@@ -7,6 +7,8 @@ services:
   redis:
     image: redis:5
     hostname: redis
+    expose:
+      - 6379
   web:
     restart: always
     build: .
@@ -17,12 +19,10 @@ services:
         - "8000:8000"
     depends_on:
       - db
+      - redis
   scheduler:
     build: .
     command: python manage.py rqscheduler
-    links:
-      - db
-      - redis
     depends_on:
       - db
       - redis
@@ -30,9 +30,6 @@ services:
   worker:
     build: .
     command: python manage.py rqworker default
-    links:
-      - db
-      - redis
     depends_on:
       - db
       - redis
