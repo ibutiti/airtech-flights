@@ -10,4 +10,6 @@ class FlightSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Flight
-        exclude = ('deleted_at',)
+        fields = ('status', 'origin', 'destination', 'departure_time', 'updated_at',
+                  'arrival_time', 'seats', 'available_seats', 'id', 'created_at')
+        read_only_fields = ('available_seats', 'id', 'created_at', 'updated_at')
