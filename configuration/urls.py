@@ -21,6 +21,7 @@ urlpatterns = [
     path('auth/', include('authentication.urls')),
     path('django-rq/', include('django_rq.urls')),
     path('flight/', include('flights.urls')),
+    path('ticket/', include('tickets.urls')),
     path('user/', include('userprofile.urls')),
 ]
 

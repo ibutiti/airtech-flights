@@ -10,4 +10,12 @@ class CreateRetrieveUpdateDestroyViewset(mixins.CreateModelMixin,
                                          mixins.DestroyModelMixin,
                                          GenericViewSet):
     '''Custom viewset without the list method implemented'''
-    pass
+
+
+
+class CreateRetrieveDestroyViewset(mixins.CreateModelMixin,
+                                   mixins.RetrieveModelMixin,
+                                   mixins.ListModelMixin,
+                                   mixins.DestroyModelMixin,
+                                   GenericViewSet):
+    '''Custom viewset without the update methods implemented'''
