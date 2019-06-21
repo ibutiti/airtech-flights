@@ -1,14 +1,18 @@
 '''
 Commonly used test utilities
 '''
+import datetime
+
+from io import BytesIO
 from unittest import mock
 
 from django.core.files import File
 from django.core.files.storage import Storage
-from io import BytesIO
 from PIL import Image
 
 from authentication.models import User
+from flights.models import Flight
+from tickets.models import Ticket
 from userprofile.models import PassportPhoto
 
 class TestMixin:
@@ -86,3 +90,34 @@ class TestMixin:
             file=image
             )
         return photo
+
+
+    @classmethod
+    def create_flight(cls, origin, destination, seats, departure_time=None, arrival_time=None, status='Open'):
+        '''
+        Helper to create a flight
+        '''
+        now = datetime.datetime.now(datetime.timezone.utc)
+        if not departure_time:
+            departure_time = now + datetime.timedelta(hours=12)
+
+        if not arrival_time:
+            arrival_time = now + datetime.timedelta(hours=24)
+
+        return Flight.objects.create(
+            origin=origin,
+            destination=destination,
+            seats=seats,
+            departure_time=departure_time,
+            arrival_time=arrival_time,
+            status=status
+        )
+
+
+    @classmethod
+    def create_ticket(cls, flight, user, status):
+        return Ticket.objects.create(
+            flight=flight,
+            user=user,
+            status=status
+        )

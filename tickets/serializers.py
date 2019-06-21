@@ -19,6 +19,8 @@ class TicketSerializer(serializers.ModelSerializer):
         '''Inject the request user to the create kwargs, check for available seats'''
         if validated_data['flight'].available_seats < 1:
             raise serializers.ValidationError('This flight has no available seats')
+        if not validated_data['flight'].status == 'Open':
+            raise serializers.ValidationError('This flight is not open for booking')
         validated_data['user'] = self.context['user']
         return super().create(validated_data)
 
