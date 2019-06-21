@@ -19,6 +19,7 @@ class Ticket(BaseModel):
         'flights.flight',
         null=False,
         blank=False,
+        related_name='tickets',
         on_delete=models.DO_NOTHING
     )
     user = models.ForeignKey(
@@ -28,9 +29,9 @@ class Ticket(BaseModel):
         on_delete=models.DO_NOTHING
     )
     status = models.CharField(
-        default=TicketStatus.reservation,
+        default=TicketStatus.reservation.value,
         choices=TicketStatus.choices(),
         null=False,
         blank=False,
-        max_length=16
+        max_length=32
     )
