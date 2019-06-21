@@ -28,6 +28,7 @@ pygments = "*"
 markdown = "*"
 pillow = "*"
 django-filter = "*"
+django-anymail = "*"
 
 [requires]
 python_version = "3.7"
