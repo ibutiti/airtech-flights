@@ -83,13 +83,15 @@ TEST_OUTPUT_FILE_NAME = 'results.xml'
 
 DATABASES = {
     'default': env.db(
+        'DATABASE_URL',
         default='postgres://postgres:postgres@db:5432/postgres',
         engine='django.db.backends.postgresql_psycopg2')
 }
 
 CACHES = {
     'default': env.cache(
-        default='rediscache://127.0.0.1:6379/1?client_class=django_redis.client.DefaultClient',
+        'REDIS_URL',
+        default='rediscache://redis?client_class=django_redis.client.DefaultClient',
     )
 }
 
