@@ -160,9 +160,9 @@ AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='obtained-from-your
 
 # email config
 EMAIL_BACKEND = 'anymail.backends.amazon_ses.EmailBackend'
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', 'email@example.com')
 ANYMAIL = {
     'AMAZON_SES_CLIENT_PARAMS': {
-        'region_name': env('AWS_SES_REGION_NAME')
+        'region_name': env('AWS_SES_REGION_NAME', default='us-east-1')
     }
 }
