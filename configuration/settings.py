@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
+    'anymail',
     'authentication',
     'flights',
     'payments',
@@ -156,3 +157,12 @@ AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME', default='your-chosen-s3
 AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME', default='your-bucket-aws-region')
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='obtained-from-your-aws-console')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='obtained-from-your-aws-console')
+
+# email config
+EMAIL_BACKEND = 'anymail.backends.amazon_ses.EmailBackend'
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+ANYMAIL = {
+    'AMAZON_SES_CLIENT_PARAMS': {
+        'region_name': env('AWS_SES_REGION_NAME')
+    }
+}
