@@ -213,7 +213,8 @@ class TestTicketStatusViews(TestBase):
 
 # Test POST
 
-    def test_admin_user_update_status_successfully(self):
+    @mock.patch('tickets.models.send_email.delay')
+    def test_admin_user_update_status_successfully(self, send_email_mock):
         '''Test admin user can successfully update a ticket'''
 
         response = self.client.post(self.url, self.payload)
@@ -222,6 +223,9 @@ class TestTicketStatusViews(TestBase):
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(self.ticket.status, 'PAID')
+
+        # verify user is sent a status update
+        send_email_mock.assert_called()
 
     def test_admin_user_update_status_missing_id_fails(self):
         '''Test fails when admin sends payload without ticket id'''
