@@ -46,6 +46,7 @@ class Ticket(BaseModel):
             'REMINDER': 'Heads up! Your flight below leaves soon!'
         }
         content = f'Hey {self.user.full_name},\n{message_mapping[message_type]}\n{self.flight.flight_details}'
+
         send_email.delay(
             recipients=[self.user.email],
             subject='Airtech: Your Flight Ticket',
