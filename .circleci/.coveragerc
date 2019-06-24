@@ -11,3 +11,4 @@ omit =
     configuration/*
     *manage.py
     common/*
+    *commands/*
