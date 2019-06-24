@@ -36,6 +36,7 @@ class Ticket(BaseModel):
         blank=False,
         max_length=32
     )
+    reminder_sent = models.BooleanField(default=False)
 
     def send_ticket_to_user(self):
         '''Utility to send the ticket to the user'''

@@ -12,7 +12,7 @@ class TicketSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ticket
-        exclude = ('deleted_at', 'user')
+        exclude = ('deleted_at', 'user', 'reminder_sent')
         read_only_fields = ('status',)
 
     def create(self, validated_data):
