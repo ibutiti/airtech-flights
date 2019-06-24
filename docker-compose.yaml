@@ -11,7 +11,7 @@ services:
       - 6379
   web:
     restart: always
-    build: .
+    image: ibutiti/airtech-flights_web:latest
     command: gunicorn configuration.wsgi:application --bind 0.0.0.0:8000 --workers 4 --name airtech --reload
     volumes:
       - .:/src
@@ -23,21 +23,21 @@ services:
       - db
       - redis
   scheduler:
-    build: .
+    image: ibutiti/airtech-flights_web:latest
     command: python manage.py start_scheduler
     depends_on:
       - db
       - redis
     hostname: scheduler
   worker:
-    build: .
+    image: ibutiti/airtech-flights_web:latest
     command: python manage.py rqworker default
     depends_on:
       - db
       - redis
     hostname: worker
   nginx:
-    build: ./nginx
+    image: ibutiti/nginx-airtech:latest
     ports:
       - 1337:80
     depends_on:

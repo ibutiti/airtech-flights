@@ -6,9 +6,9 @@ RUN mkdir /src
 
 WORKDIR /src
 
-COPY Pipfile Pipfile.lock /src/
-
 RUN pip install --no-cache-dir pipenv
+
+COPY Pipfile Pipfile.lock /src/
 
 RUN pipenv install --system --dev
 
