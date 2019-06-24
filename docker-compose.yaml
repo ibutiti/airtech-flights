@@ -24,7 +24,7 @@ services:
       - redis
   scheduler:
     build: .
-    command: python manage.py rqscheduler
+    command: python manage.py start_scheduler
     depends_on:
       - db
       - redis

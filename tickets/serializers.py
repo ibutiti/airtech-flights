@@ -23,7 +23,7 @@ class TicketSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('This flight is not open for booking')
         validated_data['user'] = self.context['user']
         ticket = super().create(validated_data)
-        ticket.send_ticket_to_user()
+        ticket.send_ticket_to_user(message_type=ticket.status)
         return ticket
 
     def to_representation(self, instance):
