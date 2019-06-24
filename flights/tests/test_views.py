@@ -1,10 +1,12 @@
 '''
 Flight endpoint tests
 '''
+from unittest import mock
+from uuid import uuid4
+
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-from uuid import uuid4
 
 from flights.models import Flight
 from flights.tests.mixin import TestBase
@@ -141,6 +143,7 @@ class FlightViewsetTestCase(TestBase):
                 self.assertIn('This field is required', str(response.data))
 
 # Test PUT
+    @mock.patch('flights.models.send_email', mock.MagicMock(return_value=None))
     def test_full_update_flight_success(self):
         '''Test authenticated admin can full update a flight'''
         initial_count = Flight.objects.count()
@@ -215,6 +218,7 @@ class FlightViewsetTestCase(TestBase):
 
 # Test PATCH
 
+    @mock.patch('flights.models.send_email', mock.MagicMock(return_value=None))
     def test_partial_update_flight_success(self):
         '''Test authenticated admin can partial update a flight'''
         initial_count = Flight.objects.count()
