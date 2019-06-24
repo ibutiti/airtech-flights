@@ -27,8 +27,6 @@ INSTALLED_APPS = [
     'anymail',
     'authentication',
     'flights',
-    'payments',
-    'reservations',
     'tickets',
     'userprofile',
 ]
