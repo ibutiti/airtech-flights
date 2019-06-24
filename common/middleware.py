@@ -26,7 +26,7 @@ def drf_custom_handler(exc, context):
 
     elif isinstance(exc, rest_exceptions.APIException):
         return Response({'error': exc.detail}, status=status.HTTP_400_BAD_REQUEST)
-
+    logger.error(exc.detail)
     data = {
         'error': 'InternalServerError',
         'error_description': 'An error occurred'

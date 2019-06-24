@@ -3,6 +3,7 @@ Flight ticket model
 '''
 from django.db import models
 
+from common.mailer import send_email
 from common.models import BaseModel
 from common.utils import ChoiceEnum
 
@@ -35,3 +36,16 @@ class Ticket(BaseModel):
         blank=False,
         max_length=32
     )
+
+    def send_ticket_to_user(self):
+        '''Utility to send the ticket to the user'''
+        status_to_message_mapping = {
+            'RESERVATION': 'Your flight reservation has been made. Please make full payment to confirm the booking.',
+            'PAID': 'Your flight reservation has been confirmed.'
+        }
+        content = f'Hey {self.user.full_name},\n{status_to_message_mapping[self.status]}\n{self.flight.flight_details}'
+        send_email.delay(
+            recipients=[self.user.email],
+            subject='Airtech: Your Flight Ticket',
+            content=content
+        )
