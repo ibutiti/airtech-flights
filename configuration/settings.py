@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
+    'anymail',
     'authentication',
     'flights',
     'payments',
@@ -83,13 +84,15 @@ TEST_OUTPUT_FILE_NAME = 'results.xml'
 
 DATABASES = {
     'default': env.db(
+        'DATABASE_URL',
         default='postgres://postgres:postgres@db:5432/postgres',
         engine='django.db.backends.postgresql_psycopg2')
 }
 
 CACHES = {
     'default': env.cache(
-        default='rediscache://127.0.0.1:6379/1?client_class=django_redis.client.DefaultClient',
+        'REDIS_URL',
+        default='rediscache://redis?client_class=django_redis.client.DefaultClient',
     )
 }
 
@@ -154,3 +157,12 @@ AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME', default='your-chosen-s3
 AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME', default='your-bucket-aws-region')
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='obtained-from-your-aws-console')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='obtained-from-your-aws-console')
+
+# email config
+EMAIL_BACKEND = 'anymail.backends.amazon_ses.EmailBackend'
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='email@example.com')
+ANYMAIL = {
+    'AMAZON_SES_CLIENT_PARAMS': {
+        'region_name': env('AWS_SES_REGION_NAME', default='us-east-1')
+    }
+}

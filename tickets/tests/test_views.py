@@ -1,6 +1,7 @@
 '''
 Ticket endpoint tests
 '''
+from unittest import mock
 from uuid import uuid4
 
 from django.urls import reverse
@@ -83,6 +84,7 @@ class TicketViewsetTestCase(TestBase):
 
 # Test POST
 
+    @mock.patch('tickets.models.send_email', mock.MagicMock(return_value=None))
     def test_create_ticket_success(self):
         '''Test an authenticated user can create a flight successfully when seats available'''
         initial_seats_count = self.flight.available_seats
@@ -109,6 +111,7 @@ class TicketViewsetTestCase(TestBase):
         with self.subTest('Test does not reduce the number of available seats in the flight'):
             self.assertEqual(self.flight.available_seats, initial_seats_count)
 
+    @mock.patch('flights.models.send_email', mock.MagicMock(return_value=None))
     def test_create_ticket_fails_when_flight_has_no_seats(self):
         '''Test creating a ticket on a flight with no seats fails'''
         self.flight.seats = 1
@@ -123,6 +126,7 @@ class TicketViewsetTestCase(TestBase):
         with self.subTest('Test does not reduce the number of available seats in the flight'):
             self.assertEqual(self.flight.available_seats, initial_seats_count)
 
+    @mock.patch('flights.models.send_email', mock.MagicMock(return_value=None))
     def test_create_ticket_fails_when_flight_is_not_open(self):
         '''Test creating a ticket on a non open flight fails'''
         self.flight.status = 'Closed'

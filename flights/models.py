@@ -1,5 +1,6 @@
 from django.db import models
 
+from common.mailer import send_email
 from common.models import BaseModel
 
 
@@ -42,5 +43,32 @@ class Flight(BaseModel):
         '''Number of available seats on the flight'''
         return self.seats - self.tickets.count()
 
+    @property
+    def flight_number(self):
+        '''5 Character flight number'''
+        return str(self.id)[:5]
+
+    @property
+    def flight_details(self):
+        '''Helper to create a human friendly flight detail representation'''
+        return (f'Flight Number: {self.flight_number}\nOrigin: {self.origin}\n'
+                f'Departure Time: {str(self.departure_time)}\nDestination: {self.destination}\n'
+                f'Arrival Time: {str(self.arrival_time)}\nFlight status: {self.status}'
+        )
+
     def __str__(self):
-        return f'Flight {str(self.id)[:5]} {str(self.departure_time)}: {self.origin} -> {self.destination}'
+        return f'Flight {self.flight_number} {str(self.departure_time)}: {self.origin} -> {self.destination}'
+
+    def save(self, *args, **kwargs):
+        '''Send status updates to ticket holders'''
+        super().save(*args, **kwargs)
+        subject = 'Airtech: Updates to your flight'
+        tickets = self.tickets.all()
+        if tickets:
+            users = set([ticket.user for ticket in self.tickets.all()])
+            for user in users:
+                send_email.delay(
+                    subject=subject,
+                    content=f'Hey {user.full_name},\nYour flight has been updated. Here are the new details:\n{self.flight_details}',
+                    recipients=[user.email]
+                )

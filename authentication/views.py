@@ -10,6 +10,7 @@ from rest_framework.viewsets import ViewSet
 
 from authentication.models import User
 from authentication.serializers import UserSignUpSerializer
+from common.mailer import send_email
 
 
 class UserSignUpViewset(ViewSet):
@@ -22,8 +23,14 @@ class UserSignUpViewset(ViewSet):
 
         serializer = UserSignUpSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        user = serializer.save()
 
+        # send sign up email to user
+        send_email.delay(
+            subject='Welcome to Airtech Flights!',
+            content=f'Your account sign up was successfull {user.full_name}. Welcome to Airtech flights.',
+            recipients=[user.email]
+        )
         return Response(
             data={'message': 'Sign up successful'},
             status=status.HTTP_201_CREATED

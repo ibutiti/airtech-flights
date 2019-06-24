@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ce63bdddc82765a1a875107fb61158a81a459e72685e0884d48abbd9468f8d92"
+            "sha256": "5f450ed60455fa23ee8b5420175b2c6adbd05260f9e83dc5c5a4ace34ea2fc43"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -18,18 +18,18 @@
     "default": {
         "boto3": {
             "hashes": [
-                "sha256:325caa455c375734fe6b2a7a339af75303dbc300f8a1923655280679b78b1477",
-                "sha256:e5d85f68a9895a563ef974e3999f0d1497200e041291249f8329d0c71b5d6f74"
+                "sha256:73b65793f12141e14393a4f321861f3f33b68f9dfe4f14b7e65cdbfda5c7ccdb",
+                "sha256:e6472861a88d0bb47844c7d03764b730c7fb9ab393a5f0a29f6b4dc0b20bee3d"
             ],
             "index": "pypi",
-            "version": "==1.9.171"
+            "version": "==1.9.174"
         },
         "botocore": {
             "hashes": [
-                "sha256:3f5ceb49f43cc15926f16ec5738b54afbce492ba0344281addde8482e0e69b4b",
-                "sha256:64754c2c2683416722c2d1550d4b0193967653083b9db3afe4e0c339c17fa3ef"
+                "sha256:3356e72901d5a4259b8858785e415a895641454971e3fa67b4076b4c9bed543d",
+                "sha256:f7220c6dd551724d4af796fb7ddfef6d423bade92e78c3cc2282953b38dfb259"
             ],
-            "version": "==1.12.171"
+            "version": "==1.12.174"
         },
         "certifi": {
             "hashes": [
@@ -81,6 +81,14 @@
             ],
             "index": "pypi",
             "version": "==2.2.2"
+        },
+        "django-anymail": {
+            "hashes": [
+                "sha256:cb70bc28c188a4424b212bc91593cbc4247f2f21440fef2d209400c6dce7a18e",
+                "sha256:fdd87c6818b78f6d503e7dafeef679b6849613e0fe19129a30425914822630a3"
+            ],
+            "index": "pypi",
+            "version": "==6.0.1"
         },
         "django-environ": {
             "hashes": [
@@ -346,11 +354,11 @@
         },
         "stripe": {
             "hashes": [
-                "sha256:d25e98416c80eead2d9064761d6baaa1901402e18c5da5086961b7f56f0ea7ce",
-                "sha256:de6be07c9e8a350d588278186316f66c72af7036aa5e917d1a924fb875249034"
+                "sha256:c9a650a94b2184025dddd1cf1f4392411a411a24cd7b06e2ba3690793391081d",
+                "sha256:ce88b53012762200dc4b7591a33857697361dfe8211cc451fd0381a2a897c28d"
             ],
             "index": "pypi",
-            "version": "==2.30.0"
+            "version": "==2.30.1"
         },
         "uritemplate": {
             "hashes": [

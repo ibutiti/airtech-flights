@@ -1,3 +1,8 @@
+'''
+Authentication endpoint tests
+'''
+from unittest import mock
+
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -21,6 +26,7 @@ class UserSignupViewsetTestCase(AbstractTestCase):
         }
         self.url = reverse('authentication:signup-list')
 
+    @mock.patch('authentication.views.send_email', mock.MagicMock(return_value=None))
     def test_creates_user_successfully(self):
         '''Test valid request body creates user successfully'''
 
