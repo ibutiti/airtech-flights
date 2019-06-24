@@ -196,3 +196,80 @@ class TicketViewsetTestCase(TestBase):
 
         with self.subTest('Test increases the number of available seats'):
             self.assertEqual(self.flight.available_seats, initial_available_seat_count)
+
+
+class TestTicketStatusViews(TestBase):
+    '''Test ticket status views'''
+
+    def setUp(self):
+        super().setUp()
+        self.admin_user = self.create_user(superuser=True)
+        self.client.force_authenticate(user=self.admin_user)
+        self.payload = {
+            'ticket_id': str(self.ticket.id),
+            'ticket_status': 'PAID'
+        }
+        self.url = reverse('ticket:ticket-status')
+
+# Test POST
+
+    def test_admin_user_update_status_successfully(self):
+        '''Test admin user can successfully update a ticket'''
+
+        response = self.client.post(self.url, self.payload)
+
+        self.ticket.refresh_from_db()
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(self.ticket.status, 'PAID')
+
+    def test_admin_user_update_status_missing_id_fails(self):
+        '''Test fails when admin sends payload without ticket id'''
+        del self.payload['ticket_id']
+        response = self.client.post(self.url, self.payload)
+
+        self.ticket.refresh_from_db()
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(self.ticket.status, 'RESERVATION')
+
+    def test_admin_user_update_status_missing_status_fails(self):
+        '''Test fails when admin sends payload without ticket status'''
+        del self.payload['ticket_status']
+        response = self.client.post(self.url, self.payload)
+
+        self.ticket.refresh_from_db()
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(self.ticket.status, 'RESERVATION')
+
+    def test_non_admin_user_cant_update_status(self):
+        '''Test non admin user cannot change ticket status'''
+        self.client.force_authenticate(user=self.user)
+
+        response = self.client.post(self.url, self.payload)
+
+        self.ticket.refresh_from_db()
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(self.ticket.status, 'RESERVATION')
+
+
+# Test GET
+
+    def test_admin_can_get_all_reserved_tickets(self):
+        '''Test admin can retrieve tickets with status reserved'''
+        reserved_count = Ticket.objects.filter(status='RESERVATION').count()
+
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), reserved_count)
+
+    def test_non_admin_cant_get_all_reserved_tickets(self):
+        '''Test non admin cant retrieve tickets with status reserved'''
+        self.client.force_authenticate(user=self.user)
+
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

@@ -24,5 +24,5 @@ class TestBase(TestCase, TestMixin):
         self.ticket = self.create_ticket(
             flight=self.flight,
             user=self.user,
-            status='RESERVED'
+            status='RESERVATION'
         )

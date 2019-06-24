@@ -13,6 +13,6 @@ router.register(r'', TicketViewset, basename='ticket')
 app_name = 'ticket'
 
 urlpatterns = [
-    path('status/', TicketStatusView.as_view())
+    path('status/', TicketStatusView.as_view(), name='ticket-status')
 ]
 urlpatterns += router.urls
