@@ -36,14 +36,17 @@ class Ticket(BaseModel):
         blank=False,
         max_length=32
     )
+    reminder_sent = models.BooleanField(default=False)
 
-    def send_ticket_to_user(self):
+    def send_ticket_to_user(self, message_type):
         '''Utility to send the ticket to the user'''
-        status_to_message_mapping = {
+        message_mapping = {
             'RESERVATION': 'Your flight reservation has been made. Please make full payment to confirm the booking.',
-            'PAID': 'Your flight reservation has been confirmed.'
+            'PAID': 'Your flight reservation has been confirmed.',
+            'REMINDER': 'Heads up! Your flight below leaves soon!'
         }
-        content = f'Hey {self.user.full_name},\n{status_to_message_mapping[self.status]}\n{self.flight.flight_details}'
+        content = f'Hey {self.user.full_name},\n{message_mapping[message_type]}\n{self.flight.flight_details}'
+
         send_email.delay(
             recipients=[self.user.email],
             subject='Airtech: Your Flight Ticket',
