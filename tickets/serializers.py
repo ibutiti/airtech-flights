@@ -22,7 +22,9 @@ class TicketSerializer(serializers.ModelSerializer):
         if not validated_data['flight'].status == 'Open':
             raise serializers.ValidationError('This flight is not open for booking')
         validated_data['user'] = self.context['user']
-        return super().create(validated_data)
+        ticket = super().create(validated_data)
+        ticket.send_ticket_to_user()
+        return ticket
 
     def to_representation(self, instance):
         '''Add flight details to output'''
