@@ -10,3 +10,6 @@ PASSWORD_HASHERS = (
 # Turn async off for testing
 for queue_config in RQ_QUEUES.values():
     queue_config['ASYNC'] = False
+# Turn off throttling for testing
+REST_FRAMEWORK['DEFAULT_THROTTLE_CLASSES'] = tuple()
+REST_FRAMEWORK['DEFAULT_THROTTLE_RATES'] = tuple()
