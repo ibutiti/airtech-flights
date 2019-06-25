@@ -10,7 +10,7 @@ SECRET_KEY = env('SECRET_KEY', default='some_secret_key')
 
 DEBUG = env('DEBUG', default='False')
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', 'airtech-flights.herokuapp.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
