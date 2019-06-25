@@ -8,7 +8,7 @@ DEBUG = False
 SECURE_SSL_REDIRECT = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECRET_KEY = getenv('SECRET_KEY')
-ALLOWED_HOSTS = ALLOWED_HOSTS.append(getenv('HOST'))
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', getenv('HOST')]
 DATABASES = {
     'default': dj_database_url.config(conn_max_age=600)
 }
