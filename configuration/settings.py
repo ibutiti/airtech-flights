@@ -1,6 +1,7 @@
 import environ
 
 ROOT_DIR = environ.Path(__file__) - 2
+PROJECT_ROOT = ROOT_DIR
 env = environ.Env()
 
 env.read_env(str(ROOT_DIR.path(".env")))
