@@ -1,6 +1,7 @@
 import environ
 
 ROOT_DIR = environ.Path(__file__) - 2
+PROJECT_ROOT = ROOT_DIR
 env = environ.Env()
 
 env.read_env(str(ROOT_DIR.path(".env")))
@@ -48,6 +49,14 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_THROTTLE_CLASSES': (
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ),
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '5/min',
+        'user': '100/min'
+    },
     'EXCEPTION_HANDLER': 'common.middleware.drf_custom_handler'
 }
 
