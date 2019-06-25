@@ -1,10 +1,13 @@
 from os import getenv
+
+import dj_database_url
+
 from configuration.settings import *
 
 DEBUG = False
 SECRET_KEY = getenv('SECRET_KEY')
 DATABASES = {
-    'default': ''
+    'default': dj_database_url.config(conn_max_age=600)
 }
 
 CACHES = {
