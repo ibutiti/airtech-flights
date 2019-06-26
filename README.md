@@ -29,7 +29,7 @@ Run the command `make start_logs` and the server should start up with the defaul
 
 The application will be accessible from `0.0.0.0:8000` on your browser or API Client (Such as [Postman](https://www.getpostman.com/)).
 
-You can configure your own environment variables by making a copy of the `.env-sample` file and modifying the values on it. The file as is is appropriately setup for the development environment, just rename it to `.env`.
+You can configure your own environment variables by making a copy of the `.env-sample` file and modifying the values on it. The file as is is appropriately setup for the development environment, just rename it to `.env`. Profile photo uploads and emails will however not work till you setup the AWS credentials and setup a default `send as` email address.
 
 ## Useful Commands
 - `make start`
