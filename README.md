@@ -1,7 +1,7 @@
 # Airtech Flight Booking System
 An flight booking API for a fictional company Airtech to automate their current spreadsheet based system.
 
-The API is built on Django and Django Rest Framework, Postgres database, Redis queues and caches. It is configured for deployment to Heroku.
+The API is built on Django and Django Rest Framework, Postgres database, Redis queues and caches. It is configured for deployment to Heroku. Try it out [here](https://airtech-flights.herokuapp.com)
 
 [![CircleCI](https://circleci.com/gh/ibutiti/airtech-flights/tree/master.svg?style=svg)](https://circleci.com/gh/ibutiti/airtech-flights/tree/master)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/6bad4714d5087bcd1858/test_coverage)](https://codeclimate.com/github/ibutiti/airtech-flights/test_coverage)
@@ -11,9 +11,8 @@ The API is built on Django and Django Rest Framework, Postgres database, Redis q
 ## Features
 1. User registration and login
 2. Booking and reserving flight tickets
-3. Online purchase of tickets (stripe payment processing)
-4. Flight status updates
-5. Flight booking updates
+3. Flight status updates
+4. Flight booking updates
 
 ## Requirements
 - Docker

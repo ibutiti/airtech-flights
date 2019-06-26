@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from configuration.landing_page import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,6 +24,7 @@ urlpatterns = [
     path('flight/', include('flights.urls')),
     path('ticket/', include('tickets.urls')),
     path('user/', include('userprofile.urls')),
+    path('', index, name='index'),
 ]
 
 handler_404 = 'common.middleware.handle_django_404'
