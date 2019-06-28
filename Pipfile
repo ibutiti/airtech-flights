@@ -30,6 +30,7 @@ pillow = "*"
 django-filter = "*"
 django-anymail = "*"
 dj-database-url = "*"
+locustio = "*"
 
 [requires]
 python_version = "3.7"
