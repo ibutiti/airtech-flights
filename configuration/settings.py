@@ -13,7 +13,6 @@ DEBUG = env('DEBUG', default='False')
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
